@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zeynep Altuntaş</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --bg: #0a0c0f;
+  --bg2: #0f1318;
+  --surface: #13181f;
+  --surface2: #1a2029;
+  --border: rgba(255,255,255,0.06);
+  --text: #e8eaed;
+  --muted: #6b7785;
+  --dim: #3d4a57;
+  --accent: #a8c4d4;
+  --accent2: #7ba8c0;
+  --gold: #c8b89a;
+  --glow: rgba(168, 196, 212, 0.12);
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  overflow-x: hidden;
+  line-height: 1.6;
+}
+
+/* ─── NOISE LAYER ─── */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+  opacity: 0.028;
+  pointer-events: none;
+  z-index: 1000;
+}
+
+/* ─── RUNE PATTERN (subtle) ─── */
+body::after {
+  content: '';
+  position: fixed;
+  top: 0; right: 0;
+  width: 600px; height: 600px;
+  background-image: 
+    repeating-linear-gradient(0deg, transparent, transparent 39px, rgba(168,196,212,0.015) 40px),
+    repeating-linear-gradient(90deg, transparent, transparent 39px, rgba(168,196,212,0.015) 40px);
+  pointer-events: none;
+  z-index: 0;
+  mask-image: radial-gradient(ellipse at top right, black 0%, transparent 70%);
+}
+
+/* ─── HERO ─── */
+.hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  overflow: hidden;
+  padding: 6rem 2rem;
+}
+
+/* Fog / atmospheric background */
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 80% 60% at 50% 0%, rgba(40, 70, 100, 0.35) 0%, transparent 70%),
+    radial-gradient(ellipse 60% 40% at 20% 80%, rgba(30, 50, 70, 0.2) 0%, transparent 60%),
+    radial-gradient(ellipse 40% 30% at 80% 90%, rgba(168,196,212,0.04) 0%, transparent 60%),
+    linear-gradient(180deg, #0a0c0f 0%, #0c1219 50%, #0a0c0f 100%);
+  animation: fogDrift 12s ease-in-out infinite alternate;
+}
+
+@keyframes fogDrift {
+  0% { opacity: 1; transform: scale(1) translateY(0); }
+  100% { opacity: 0.85; transform: scale(1.03) translateY(-10px); }
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  max-width: 700px;
+}
+
+/* Avatar */
+.avatar-wrap {
+  position: relative;
+  display: inline-block;
+  margin-bottom: 2.5rem;
+  opacity: 0;
+  animation: riseIn 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards 0.3s;
+}
+
+.avatar-ring {
+  position: absolute;
+  inset: -12px;
+  border-radius: 50%;
+  border: 1px solid rgba(168, 196, 212, 0.15);
+  animation: ringPulse 4s ease-in-out infinite;
+}
+
+.avatar-ring2 {
+  position: absolute;
+  inset: -24px;
+  border-radius: 50%;
+  border: 1px solid rgba(168, 196, 212, 0.06);
+  animation: ringPulse 4s ease-in-out infinite 1s;
+}
+
+@keyframes ringPulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(1.02); }
+}
+
+.avatar {
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: top center;
+  border: 2px solid rgba(168, 196, 212, 0.2);
+  filter: grayscale(25%) contrast(1.08) brightness(0.95);
+  box-shadow:
+    0 0 40px rgba(168, 196, 212, 0.1),
+    0 0 80px rgba(40, 70, 100, 0.3),
+    inset 0 0 20px rgba(0,0,0,0.3);
+  position: relative;
+  z-index: 1;
+}
+
+.hero-eyebrow {
+  font-size: 0.7rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 1.2rem;
+  opacity: 0;
+  animation: riseIn 1s ease forwards 0.6s;
+}
+
+.hero h1 {
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(2.6rem, 6.5vw, 5rem);
+  line-height: 1;
+  margin-bottom: 1.5rem;
+  opacity: 0;
+  animation: riseIn 1s ease forwards 0.7s;
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 0.3em;
+  flex-wrap: nowrap;
+  cursor: default;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+.hero h1 .fname {
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  background: linear-gradient(160deg, #ffffff 0%, #e8eaed 40%, #c8d8e8 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  filter: drop-shadow(0 0 20px rgba(255,255,255,0.08));
+  transition: filter 0.4s ease;
+}
+
+.hero h1 .lname {
+  font-weight: 300;
+  letter-spacing: 0.16em;
+  background: linear-gradient(160deg, #8aacbf 0%, #a8c4d4 50%, #7090a8 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  filter: drop-shadow(0 0 16px rgba(168, 196, 212, 0.08));
+  transition: filter 0.4s ease;
+}
+
+.hero h1:hover .fname {
+  filter: drop-shadow(0 0 32px rgba(255,255,255,0.22)) brightness(1.12);
+}
+
+.hero h1:hover .lname {
+  filter: drop-shadow(0 0 24px rgba(168, 196, 212, 0.3)) brightness(1.18);
+}
+
+.hero-sub {
+  font-size: 1rem;
+  color: var(--muted);
+  font-weight: 300;
+  letter-spacing: 0.02em;
+  margin-bottom: 2.5rem;
+  opacity: 0;
+  animation: riseIn 1s ease forwards 0.85s;
+}
+
+.hero-sub strong {
+  color: var(--dim);
+  font-weight: 400;
+}
+
+.hero-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.8rem 1.8rem;
+  border: 1px solid rgba(168,196,212,0.2);
+  border-radius: 999px;
+  font-size: 0.85rem;
+  color: var(--accent);
+  text-decoration: none;
+  letter-spacing: 0.05em;
+  transition: all 0.3s ease;
+  opacity: 0;
+  animation: riseIn 1s ease forwards 1s;
+  backdrop-filter: blur(4px);
+  background: rgba(168, 196, 212, 0.03);
+}
+
+.hero-cta:hover {
+  border-color: rgba(168,196,212,0.5);
+  background: rgba(168,196,212,0.06);
+  box-shadow: 0 0 20px rgba(168, 196, 212, 0.08);
+  transform: translateY(-1px);
+}
+
+.scroll-hint {
+  position: absolute;
+  bottom: 2.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  opacity: 0;
+  animation: fadeIn 1s ease forwards 1.5s;
+}
+
+.scroll-line {
+  width: 1px;
+  height: 40px;
+  background: linear-gradient(180deg, rgba(168,196,212,0.4), transparent);
+  animation: scrollDrop 2s ease-in-out infinite;
+}
+
+@keyframes scrollDrop {
+  0% { transform: scaleY(0); transform-origin: top; opacity: 1; }
+  50% { transform: scaleY(1); transform-origin: top; opacity: 1; }
+  100% { transform: scaleY(1); transform-origin: bottom; opacity: 0; }
+}
+
+/* ─── LAYOUT ─── */
+.container {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 0 2.5rem;
+}
+
+section {
+  padding: 6rem 0;
+  position: relative;
+}
+
+section + section {
+  border-top: 1px solid var(--border);
+}
+
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  margin-bottom: 4rem;
+}
+
+.section-num {
+  font-family: 'Syne', sans-serif;
+  font-size: 0.7rem;
+  letter-spacing: 0.2em;
+  color: var(--accent);
+  opacity: 0.6;
+}
+
+.section-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 0.72rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--muted);
+  font-weight: 500;
+}
+
+.section-line {
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+/* ─── ABOUT ─── */
+.about-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: start;
+}
+
+.about-headline {
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(1.8rem, 4vw, 2.8rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  color: var(--text);
+}
+
+.about-headline em {
+  font-style: italic;
+  color: var(--accent2);
+  font-family: 'Inter', sans-serif;
+  font-weight: 300;
+}
+
+.about-body p {
+  color: var(--muted);
+  font-size: 0.95rem;
+  line-height: 1.85;
+  font-weight: 300;
+}
+
+.about-body p + p { margin-top: 1rem; }
+
+/* ─── PROJECTS ─── */
+.projects-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.project-card {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  padding: 2rem 2rem 2rem 2.5rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  margin-bottom: 0.75rem;
+  position: relative;
+  overflow: hidden;
+  transition: border-color 0.3s, background 0.3s, transform 0.3s;
+}
+
+.project-card::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 3px;
+  background: linear-gradient(180deg, var(--accent), var(--accent2));
+  transform: scaleY(0);
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  border-radius: 0 0 0 0;
+}
+
+.project-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at top left, var(--glow), transparent 60%);
+  opacity: 0;
+  transition: opacity 0.4s;
+  pointer-events: none;
+}
+
+.project-card:hover {
+  border-color: rgba(168,196,212,0.2);
+  background: var(--surface2);
+  transform: translateX(6px);
+}
+
+.project-card:hover::before { transform: scaleY(1); }
+.project-card:hover::after { opacity: 1; }
+
+.project-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 0.6rem;
+}
+
+.project-name {
+  font-family: 'Syne', sans-serif;
+  font-size: 1.15rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--text);
+}
+
+.project-arrow {
+  color: var(--dim);
+  font-size: 1.1rem;
+  transition: color 0.3s, transform 0.3s;
+}
+
+.project-card:hover .project-arrow {
+  color: var(--accent);
+  transform: translate(3px, -3px);
+}
+
+.project-desc {
+  font-size: 0.88rem;
+  color: var(--muted);
+  line-height: 1.75;
+  font-weight: 300;
+  margin-bottom: 1.25rem;
+}
+
+.project-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.tags { display: flex; gap: 0.4rem; flex-wrap: wrap; }
+
+.tag {
+  font-size: 0.7rem;
+  padding: 0.2rem 0.65rem;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  color: var(--dim);
+  letter-spacing: 0.04em;
+  transition: border-color 0.3s, color 0.3s;
+}
+
+.project-card:hover .tag {
+  border-color: rgba(168,196,212,0.15);
+  color: var(--muted);
+}
+
+.live {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.7rem;
+  color: var(--accent2);
+  letter-spacing: 0.08em;
+  font-weight: 500;
+  text-transform: uppercase;
+}
+
+.live-dot {
+  width: 5px; height: 5px;
+  background: var(--accent2);
+  border-radius: 50%;
+  box-shadow: 0 0 6px var(--accent2);
+  animation: livePulse 2s ease infinite;
+}
+
+@keyframes livePulse {
+  0%, 100% { opacity: 1; box-shadow: 0 0 6px var(--accent2); }
+  50% { opacity: 0.5; box-shadow: 0 0 2px var(--accent2); }
+}
+
+/* ─── SKILLS ─── */
+.skills-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 0.6rem;
+}
+
+.skill {
+  padding: 0.7rem 1rem;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  font-size: 0.82rem;
+  color: var(--muted);
+  text-align: center;
+  letter-spacing: 0.03em;
+  background: var(--surface);
+  transition: all 0.3s ease;
+  font-weight: 400;
+}
+
+.skill:hover {
+  border-color: rgba(168,196,212,0.25);
+  color: var(--accent);
+  background: var(--surface2);
+  box-shadow: 0 0 16px rgba(168,196,212,0.04);
+  transform: translateY(-2px);
+}
+
+/* ─── FOOTER ─── */
+footer {
+  border-top: 1px solid var(--border);
+  padding: 3rem 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.footer-name {
+  font-family: 'Syne', sans-serif;
+  font-size: 0.85rem;
+  color: var(--dim);
+  letter-spacing: 0.05em;
+}
+
+.footer-links {
+  display: flex;
+  gap: 2rem;
+}
+
+.footer-link {
+  font-size: 0.8rem;
+  color: var(--muted);
+  text-decoration: none;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  transition: color 0.2s;
+}
+
+.footer-link:hover { color: var(--accent); }
+
+/* ─── SCROLL ANIMATIONS ─── */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ─── KEYFRAMES ─── */
+@keyframes riseIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* ─── RESPONSIVE ─── */
+@media (max-width: 640px) {
+  .about-grid { grid-template-columns: 1fr; gap: 2rem; }
+  .hero h1 { font-size: 2.8rem; }
+  .container { padding: 0 1.5rem; }
+  footer { flex-direction: column; gap: 1.5rem; text-align: center; }
+}
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-content">
+    <div class="avatar-wrap">
+      <div class="avatar-ring2"></div>
+      <div class="avatar-ring"></div>
+      <img class="avatar" src="https://avatars.githubusercontent.com/zeydeploys" alt="Zeynep Altuntaş" />
+    </div>
+    <p class="hero-eyebrow">Istanbul · Builder</p>
+    <h1><span class="fname">Zeynep</span><span class="lname">Altuntaş</span></h1>
+    <p class="hero-sub">
+      I build tools that make repetitive work disappear.<br>
+      <strong>Automating the tedious. Shipping the useful.</strong>
+    </p>
+    <a href="#about" class="hero-cta">View Work ↓</a>
+  </div>
+  <div class="scroll-hint">
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="section-num">01</span>
+      <span class="section-title">About</span>
+      <div class="section-line"></div>
+    </div>
+    <div class="about-grid">
+      <div class="reveal">
+        <h2 class="about-headline">Not a CS grad.<br><em>Just someone who refuses to do things manually.</em></h2>
+      </div>
+      <div class="about-body reveal">
+        <p>Based in Istanbul. I create small, focused tools that solve real problems — usually the ones I run into myself first.</p>
+        <p>Every project starts with a frustration and ends with something that actually works. I work at the intersection of curiosity, code, and a very low tolerance for repetitive tasks.</p>
+        <p>I build with AI assistance, ship fast, and keep things simple.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="section-num">02</span>
+      <span class="section-title">Projects</span>
+      <div class="section-line"></div>
+    </div>
+    <div class="projects-list">
+
+      <a href="https://zeydeploys.github.io/invoice-splitter" class="project-card reveal" target="_blank">
+        <div class="project-top">
+          <span class="project-name">Invoice Splitter</span>
+          <span class="project-arrow">↗</span>
+        </div>
+        <p class="project-desc">Upload a complex PDF, enter invoice numbers one by one, and extract exactly the pages you need. Download them individually or merged into a single file — all in the browser, no installation required.</p>
+        <div class="project-meta">
+          <div class="tags">
+            <span class="tag">JavaScript</span>
+            <span class="tag">PDF</span>
+            <span class="tag">Browser tool</span>
+          </div>
+          <span class="live"><span class="live-dot"></span>Live</span>
+        </div>
+      </a>
+
+      <a href="https://zeydeploys.github.io/mousedancer" class="project-card reveal" target="_blank">
+        <div class="project-top">
+          <span class="project-name">MouseDancer</span>
+          <span class="project-arrow">↗</span>
+        </div>
+        <p class="project-desc">Keeps your mouse cursor moving at regular intervals so your screen never goes idle and your status never shows "away". Available as a Python script or a downloadable Mac app.</p>
+        <div class="project-meta">
+          <div class="tags">
+            <span class="tag">Python</span>
+            <span class="tag">Automation</span>
+            <span class="tag">macOS</span>
+          </div>
+          <span class="live"><span class="live-dot"></span>Live</span>
+        </div>
+      </a>
+
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="section-num">03</span>
+      <span class="section-title">Stack</span>
+      <div class="section-line"></div>
+    </div>
+    <div class="skills-grid reveal">
+      <div class="skill">Python</div>
+      <div class="skill">JavaScript</div>
+      <div class="skill">HTML & CSS</div>
+      <div class="skill">Automation</div>
+      <div class="skill">AI-assisted dev</div>
+      <div class="skill">Git & GitHub</div>
+      <div class="skill">PDF tooling</div>
+      <div class="skill">macOS apps</div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container" style="display:flex;justify-content:space-between;align-items:center;width:100%">
+    <span class="footer-name">Zeynep Altuntaş · 2025</span>
+    <div class="footer-links">
+      <a href="https://github.com/zeydeploys" class="footer-link" target="_blank">GitHub</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 80);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+  reveals.forEach(el => observer.observe(el));
+
+  // Smooth scroll for anchor links
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      e.preventDefault();
+      document.querySelector(a.getAttribute('href'))?.scrollIntoView({ behavior: 'smooth' });
+    });
+  });
+</script>
+</body>
+</html>
