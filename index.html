@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Zeynep Altuntaş</title>
+<title>Zeynep Altuntas</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
@@ -152,7 +152,9 @@ body::after {
 
 .hero h1 {
   font-family: 'Syne', sans-serif;
-  font-size: clamp(2.6rem, 6.5vw, 5rem);
+  font-size: clamp(1.6rem, 4vw, 3.4rem);
+  font-weight: 800;
+  letter-spacing: -0.03em;
   line-height: 1;
   margin-bottom: 1.5rem;
   opacity: 0;
@@ -160,41 +162,12 @@ body::after {
   display: flex;
   align-items: baseline;
   justify-content: center;
-  gap: 0.3em;
-  flex-wrap: nowrap;
-  cursor: default;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-}
-
-.hero h1 .fname {
-  font-weight: 800;
-  letter-spacing: 0.06em;
-  background: linear-gradient(160deg, #ffffff 0%, #e8eaed 40%, #c8d8e8 100%);
+  gap: 0.25em;
+  white-space: nowrap;
+  background: linear-gradient(135deg, #e8eaed 0%, #a8c4d4 60%, #7ba8c0 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  filter: drop-shadow(0 0 20px rgba(255,255,255,0.08));
-  transition: filter 0.4s ease;
-}
-
-.hero h1 .lname {
-  font-weight: 300;
-  letter-spacing: 0.16em;
-  background: linear-gradient(160deg, #8aacbf 0%, #a8c4d4 50%, #7090a8 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  filter: drop-shadow(0 0 16px rgba(168, 196, 212, 0.08));
-  transition: filter 0.4s ease;
-}
-
-.hero h1:hover .fname {
-  filter: drop-shadow(0 0 32px rgba(255,255,255,0.22)) brightness(1.12);
-}
-
-.hero h1:hover .lname {
-  filter: drop-shadow(0 0 24px rgba(168, 196, 212, 0.3)) brightness(1.18);
 }
 
 .hero-sub {
@@ -575,10 +548,10 @@ footer {
     <div class="avatar-wrap">
       <div class="avatar-ring2"></div>
       <div class="avatar-ring"></div>
-      <img class="avatar" src="https://avatars.githubusercontent.com/zeydeploys" alt="Zeynep Altuntaş" />
+      <img class="avatar" src="https://avatars.githubusercontent.com/zeydeploys" alt="Zeynep Altuntas" />
     </div>
     <p class="hero-eyebrow">Istanbul · Builder</p>
-    <h1><span class="fname">Zeynep</span><span class="lname">Altuntaş</span></h1>
+    <h1>Zeynep&nbsp;Altuntas</h1>
     <p class="hero-sub">
       I build tools that make repetitive work disappear.<br>
       <strong>Automating the tedious. Shipping the useful.</strong>
@@ -681,7 +654,7 @@ footer {
 <!-- FOOTER -->
 <footer>
   <div class="container" style="display:flex;justify-content:space-between;align-items:center;width:100%">
-    <span class="footer-name">Zeynep Altuntaş · 2025</span>
+    <span class="footer-name">Zeynep Altuntas · 2025</span>
     <div class="footer-links">
       <a href="https://github.com/zeydeploys" class="footer-link" target="_blank">GitHub</a>
     </div>
