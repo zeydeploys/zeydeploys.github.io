@@ -1,0 +1,28 @@
+{
+  "name": "Dutch Inburgering",
+  "short_name": "Inburgering",
+  "description": "Hollandaca öğren, inburgering sınavını geç",
+  "start_url": "/dutch-inburgering-studyplace/",
+  "scope": "/dutch-inburgering-studyplace/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0A1628",
+  "theme_color": "#0A1628",
+  "lang": "tr",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["education", "language"],
+  "screenshots": []
+}
